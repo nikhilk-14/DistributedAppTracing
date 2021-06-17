@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace FirstApi
 {
@@ -14,8 +7,6 @@ namespace FirstApi
     {
         public static void Main(string[] args)
         {
-            //Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-            //Activity.ForceDefaultIdFormat = true;
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -24,11 +15,6 @@ namespace FirstApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    //webBuilder.ConfigureLogging(logging =>
-                    //{
-                    //    logging.ClearProviders();
-                    //    logging.AddConsole();
-                    //});
                 });
     }
 }
