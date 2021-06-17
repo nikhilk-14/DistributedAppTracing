@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ApplicationInsightsResourceId>/subscriptions/c7841388-4400-4d90-be1a-edbdcf922c9f/resourcegroups/netcore-rg/providers/microsoft.insights/components/tracing-app-insights</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,11 +8,6 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
-
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services" />
-  </ItemGroup>
-
-
 </Project>

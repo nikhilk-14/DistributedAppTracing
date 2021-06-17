@@ -27,7 +27,7 @@ namespace SecondApi.Controllers
         public IEnumerable<WeatherForecast> GetData()
         {
             var operationId = System.Diagnostics.Activity.Current.RootId;
-            _logger.LogInformation($"signalr Controller OperationId => {operationId}");
+            _logger.LogInformation($"SecondApiController OperationId => {operationId}");
 
             var rng = new Random();
             var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast

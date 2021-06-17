@@ -27,13 +27,13 @@ namespace FirstApi.Controllers
         public async Task<string> GetData()
         {
             var operationId = System.Diagnostics.Activity.Current.RootId;
-            _logger.LogInformation($"signalr Controller OperationId => {operationId}");
+            _logger.LogInformation($"FirstApiController OperationId => {operationId}");
 
             string result = null;
             using (var _httpClient = new HttpClient())
             {
                 result = await
-                      _httpClient.GetStringAsync($"{_config.GetSection("Appsettings:Thirdapi").Value}/thirdapi/signalr");
+                      _httpClient.GetStringAsync($"{_config.GetSection("Appsettings:Thirdapi").Value}/thirdapi/get_data");
             }
 
             var queueInput = "{\"Test\":\"Sample\",\"OperationId\":\"" + operationId + "\"}";

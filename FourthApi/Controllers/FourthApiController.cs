@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 
 namespace FourthApi.Controllers
 {
@@ -24,40 +22,11 @@ namespace FourthApi.Controllers
         }
 
         [HttpGet]
-        [Route("test")]
-        public IEnumerable<WeatherForecast> Test()
-        {
-            var rng = new Random();
-            var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-
-            return result;
-        }
-
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
-
-        [HttpGet]
-        [Route("signalr")]
-        public void SignalR()
+        [Route("get_data")]
+        public void GetData()
         {
             var operationId = System.Diagnostics.Activity.Current.RootId;
-            _logger.LogInformation($"signalr Controller OperationId => {operationId}");
+            _logger.LogInformation($"FourthApiController OperationId => {operationId}");
 
             var rng = new Random();
             var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -67,8 +36,7 @@ namespace FourthApi.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
-
-            _logger.LogInformation($"SignalR API: {result}");
+            _logger.LogInformation($"FourthApiController Result: {result}");
         }
     }
 }

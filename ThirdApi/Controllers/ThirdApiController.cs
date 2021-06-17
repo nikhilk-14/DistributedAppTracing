@@ -27,7 +27,7 @@ namespace ThirdApi.Controllers
         public IEnumerable<WeatherForecast> SignalR()
         {
             var operationId = System.Diagnostics.Activity.Current.RootId;
-            _logger.LogInformation($"signalr Controller OperationId => {operationId}");
+            _logger.LogInformation($"ThirdApiController OperationId => {operationId}");
 
             var rng = new Random();
             var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast
