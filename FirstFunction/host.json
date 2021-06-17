@@ -1,4 +1,5 @@
 {
+  "version": "2.0",
   "extensions": {
     "logLevel": {
       "Host.Triggers.DurableTask": "Information",
@@ -14,24 +15,11 @@
       }
     },
     "durableTask": {
-      "hubName": "Abc",
-      "storageProvider": {
-        "connectionStringName": "AzureWebJobsStorage",
-        "controlQueueBatchSize": 32,
-        "controlQueueBufferThreshold": 256,
-        "controlQueueVisibilityTimeout": "00:05:00",
-        "maxQueuePollingInterval": "00:00:30",
-        "partitionCount": 4,
-        //,
-        // "trackingStoreConnectionStringName": "TrackingStorage",
-        // "trackingStoreNamePrefix": "DurableTask",
-        "workItemQueueVisibilityTimeout": "00:05:00"
-      },
+      "hubName": "FunctionHub",
       "tracing": {
         "distributedTracingEnabled": true,
         "distributedTracingProtocol": "W3CTraceContext"
       }
     }
-  },
-  "version": "2.0"
+  }
 }

@@ -1,0 +1,18 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
+    "AZURE_STORAGE_CONNECTION_STRING": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "ServiceBusQueueConnection": "Endpoint=sb://distributed-tracing-demo.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=vPxH8rP71FF1s46gs+bq7MGJajkGoasicjbe8GLzP5M=",
+    "SecondApi": "https://tracingsecondapi.azurewebsites.net",
+    "FourthApi": "https://tracingfourthapi.azurewebsites.net",
+    "OutputServiceBusConnection": "Endpoint=sb://distributed-tracing-demo.servicebus.windows.net/;SharedAccessKeyName=ConnectionPolicy;SharedAccessKey=3401wpnyOsUlAYf8hBAki6i5u8WhUzeSx2C3w9mc0V8=;EntityPath=output-queue"
+  },
+  "Host": {
+    "LocalHttpPort": 7071,
+    "CORS": "http://localhost:3872",
+    "CORSCredentials": true
+  }
+}

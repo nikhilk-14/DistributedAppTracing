@@ -1,29 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FirstFunction
 {
     public class Function2
     {
-        public Function2()
-        {
-
-        }
-
-
         [FunctionName("Function2")]
-        public async Task Run([ServiceBusTrigger("seyc-tracing-test-input", Connection = "ServiceBusQueueConnection")] string myQueueItem, [DurableClient(TaskHub = "Abc")] IDurableOrchestrationClient starter, ILogger log)
+        public async Task Run([ServiceBusTrigger("input-queue", Connection = "ServiceBusQueueConnection")] string myQueueItem, [DurableClient(TaskHub = "FunctionHub")] IDurableOrchestrationClient starter, ILogger log)
         {
-            log.LogInformation($"Function2 => System.Diagnostics.Activity.Current.RootId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
+            log.LogInformation($"Function2 => OperationId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
             log.LogInformation($"Function2 => Input => {myQueueItem}");
 
             // Function input comes from the request content.
@@ -36,7 +28,7 @@ namespace FirstFunction
         public async Task RunOrchestrator(
             [OrchestrationTrigger] IDurableOrchestrationContext context, ILogger log)
         {
-            log.LogInformation($"Function2_Orchestrator => System.Diagnostics.Activity.Current.RootId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
+            log.LogInformation($"Function2_Orchestrator => OperationId => {System.Diagnostics.Activity.Current.RootId}");
             var input = context.GetInput<string>();
             await context.CallActivityAsync("Function2_Activity", input);
             await context.CallActivityAsync("Function2_Activity_Output", input);
@@ -45,34 +37,34 @@ namespace FirstFunction
         [FunctionName("Function2_Activity")]
         public async Task Function2_Activity([ActivityTrigger] string input, ILogger log)
         {
-            log.LogInformation($"Function2_Activity => System.Diagnostics.Activity.Current.RootId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
+            log.LogInformation($"Function2_Activity => OperationId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
             await Task.Run(() =>
             {
                 Task.Delay(1000).Wait();
             });
 
-            string secondapi = "https://tracingsecondapi.azurewebsites.net";
-            //string secondapi = "https://localhost:5002";
+            string secondapi = Environment.GetEnvironmentVariable("SecondApi");
 
             using (var _httpClient = new HttpClient())
             {
-                await _httpClient.GetStringAsync($"{secondapi}/secondapi/signalr");
+                await _httpClient.GetStringAsync($"{secondapi}/secondapi/get_data");
             }
 
             log.LogInformation($"Function2_Activity: {input}.");
         }
 
         [FunctionName("Function2_Activity_Output")]
-        //[return: ServiceBus("seyc-tracing-test-output", Connection = "ServiceBusQueueConnection")]
         public async Task Function2_Activity_Output([ActivityTrigger] string input, ILogger log)
         {
-            log.LogInformation($"Function2_Activity_Output => System.Diagnostics.Activity.Current.RootId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
-            var connectionString = "Endpoint=sb://seyc-cms-api-rules-dev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Ot3SDFOTG2NQMkD9v12DV1gn3Bto9kukgn+6YCs9Xi0=;EntityPath=";
+            log.LogInformation($"Function2_Activity_Output => OperationId => {System.Diagnostics.Activity.Current.RootId} => {DateTime.Now}");
+
+            var connectionString = Environment.GetEnvironmentVariable("OutputServiceBusConnection");
+
             await Task.Run(() =>
                 {
                     Task.Delay(1000).Wait();
                 });
-            await GenerateAndSaveQueueMessage($"{connectionString}seyc-tracing-test-output", input);
+            await GenerateAndSaveQueueMessage($"{connectionString}", input);
             log.LogInformation($"Function2_Activity_Output => Pushed data in queue {input}.");
         }
 

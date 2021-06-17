@@ -24,7 +24,7 @@ namespace ThirdApi.Controllers
 
         [HttpGet]
         [Route("get_data")]
-        public IEnumerable<WeatherForecast> SignalR()
+        public IEnumerable<WeatherForecast> GetData()
         {
             var operationId = System.Diagnostics.Activity.Current.RootId;
             _logger.LogInformation($"ThirdApiController OperationId => {operationId}");

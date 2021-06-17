@@ -38,7 +38,7 @@ namespace FirstApi.Controllers
 
             var queueInput = "{\"Test\":\"Sample\",\"OperationId\":\"" + operationId + "\"}";
 
-            await GenerateAndSaveQueueMessage($"{_config.GetSection("Appsettings:ServiceBusConnection").Value}seyc-tracing-test-input", queueInput);
+            await GenerateAndSaveQueueMessage($"{_config.GetSection("Appsettings:ServiceBusConnection").Value}", queueInput);
 
             return result;
         }

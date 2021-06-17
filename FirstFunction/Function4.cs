@@ -1,20 +1,13 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace FirstFunction
 {
     public class Function4
     {
-        public Function4()
-        {
-
-        }
-
         [FunctionName("Function4")]
-        public async Task Run([ServiceBusTrigger("seyc-tracing-test", Connection = "ServiceBusQueueConnection")]string myQueueItem, ILogger log)
+        public async Task Run([ServiceBusTrigger("test-queue", Connection = "ServiceBusQueueConnection")]string myQueueItem, ILogger log)
         {
             await Task.Run(() =>
             {
