@@ -1,3 +1,4 @@
+using FirstApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +33,16 @@ namespace FirstApi
             services.AddControllers();
             services.AddApplicationInsightsTelemetry();
             services.AddSwaggerGen();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserDataService, UserDataService>();
+
+            services.AddCors(o => o.AddPolicy("AppCORSPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+                //.AllowCredentials();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +52,8 @@ namespace FirstApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AppCORSPolicy");
 
             logger.AddSerilog();
 
@@ -59,6 +72,8 @@ namespace FirstApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            
 
             app.UseEndpoints(endpoints =>
             {

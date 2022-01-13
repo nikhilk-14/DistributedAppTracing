@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SecondApi.Services;
 using Serilog;
 
 namespace SecondApi
@@ -32,6 +33,7 @@ namespace SecondApi
             services.AddControllers();
             services.AddApplicationInsightsTelemetry();
             services.AddSwaggerGen();
+            services.AddTransient<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
